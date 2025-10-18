@@ -1,74 +1,163 @@
-# React + TypeScript + Vite
+#  Recruitment Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern recruitment management system built with **React + TypeScript + Vite** that allows users to manage **Jobs, Candidates, and Assessments**.
+The application is entirely **frontend-based** using **Mock Service Worker (MSW)** and **Dexie.js (IndexedDB)** — no backend is required.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Deployed Application
 
-## React Compiler
+**Live Demo:** [https://talenteflow.netlify.app/]()
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+##  GitHub Repository
 
-## Expanding the ESLint configuration
+**Repo URL:** [https://github.com/Bharatsharma795/TalentFlow]()
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+##  Project Overview
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+This project simulates a complete recruitment workflow:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* **Job Management:** Create, edit, and archive job postings.
+* **Candidate Tracking:** Manage candidates, view profiles, and update their progress.
+* **Assessment Builder:** Build, preview, and assign assessments dynamically.
+
+It demonstrates component-based architecture, local data persistence, and state management with React hooks.
+
+---
+
+##  Project Structure
+
+```
+src/
+├── api/            # Mock API and MSW setup
+│   ├── client.ts
+│   ├── msw/
+│      ├── browser.ts
+│      ├── handlers.ts
+│      
+│
+├── components/     # Reusable UI components
+│   ├── job/              # Job board components
+│   ├── candidates/       # Candidate management
+│   ├── assessments/      # Assessment builder
+│   └── home/             # Home dashboard
+│
+├── hooks/          # Custom hooks (Jobs, Candidates, Assessments)
+│   ├── useJobs.ts
+│   ├── useCandidates.ts
+│   └── useAssessments.ts
+│
+├── db/             # Dexie local DB setup
+│   ├── dexie.ts
+│   └── seed.ts
+│
+├── routes/         # Route-based components
+│   ├── JobsRoute.tsx
+│   ├── CandidatesRoute.tsx
+│   ├── AssessmentRoute.tsx
+│   .
+│
+├── types/          # TypeScript interfaces
+│   ├── job.ts
+│   ├── candidate.d.ts
+│   └── assessment.d.ts
+│
+├── utils/          # Utility functions (validation, slugify, etc.)
+│   ├── validations.ts
+│   ├── slugify.ts
+│   └── conditionalEval.ts
+│
+├── app.tsx         # App layout and router
+├── main.tsx        # App entry point
+└── index.css       # Tailwind base styles
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+##  Installation & Setup
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 1️⃣ Clone the repository
+git clone [https://github.com/Bharatsharma795/TalentFlow]
+cd [talentflow]
+
+# 2️⃣ Install dependencies
+npm install
+
+# 3️⃣ Run the app in development
+npm run dev
+
+# 4️⃣ Build for production
+npm run build
+
+# 5️⃣ Preview the build locally
+npm run preview
 ```
-"# TalentFlow" 
+
+---
+
+##  Technical Decisions
+
+###  Framework & Tooling
+
+* **React (with Vite):** Fast development, modern build tool.
+* **TypeScript:** Type-safe code, better maintainability.
+* **TailwindCSS:** Rapid UI design with utility classes.
+* **MSW (Mock Service Worker):** Simulates API calls without a backend.
+* **Dexie.js:** Wrapper for IndexedDB to persist data locally.
+
+###  Data Handling
+
+All data (Jobs, Candidates, Assessments) is stored in **IndexedDB** through Dexie and mocked via **MSW** handlers.
+This allows CRUD operations without any real backend.
+
+###  Architecture
+
+* **Component-based:** Each feature (Jobs, Candidates, Assessments) has isolated modules.
+* **Hooks for logic reuse:** Business logic is extracted into custom hooks.
+* **Separation of concerns:** UI, logic, and data access layers are separated cleanly.
+
+---
+
+##  Environment Variables
+
+If needed during deployment (e.g., Netlify or Vercel), set:
+
+```
+VITE_API_MOCKING=true
+```
+
+This ensures the mock service worker runs properly in production.
+
+---
+
+##  Known Issues
+
+* MSW must be properly initialized for the mock data to load.
+* Page reloads may temporarily show an empty state while Dexie re-hydrates.
+* Some browsers restrict IndexedDB access in private/incognito mode.
+
+---
+
+##  Future Enhancements
+
+* Add drag-and-drop candidate stage management.
+* Integrate external API (e.g., for job posting).
+* Add authentication for HR/Admin roles.
+
+---
+
+##  Developer
+
+**Bharat Sharma**
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
